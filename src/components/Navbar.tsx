@@ -125,5 +125,7 @@ export const Navbar = () => {
         )}
       </div>
     </nav>
+    <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
+    </>
   );
 };
