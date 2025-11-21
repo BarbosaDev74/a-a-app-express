@@ -3,7 +3,6 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import heroImage from "@/assets/hero-acai.jpg";
 import { ArrowRight, Star, Clock, MapPin } from "lucide-react";
 
 const Index = () => {
@@ -15,7 +14,7 @@ const Index = () => {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-hero opacity-95"></div>
         <img
-          src={heroImage}
+          src="/images/hero-acai.jpg"
           alt="Açaí"
           className="absolute inset-0 w-full h-full object-cover mix-blend-multiply"
         />
