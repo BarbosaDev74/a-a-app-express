@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, User, Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -11,6 +11,7 @@ export const Navbar = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const { totalItems } = useCart();
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -54,7 +55,7 @@ export const Navbar = () => {
                     variant="ghost"
                     size="icon"
                     className="text-primary-foreground hover:bg-primary-foreground/10"
-                    onClick={() => (window.location.href = '/dashboard')}
+                    onClick={() => navigate('/dashboard')}
                   >
                     <User className="h-5 w-5" />
                   </Button>

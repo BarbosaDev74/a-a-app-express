@@ -11,13 +11,35 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { ShoppingBag } from 'lucide-react';
+import type { CartItem } from '@/types/product';
+
+const generateWhatsAppMessage = (name: string, phone: string, cart: CartItem[], total: number) => {
+  let message = '🍦 PEDIDO PARA RETIRADA - açaí 🍨\n\n';
+  message += `👤 Cliente: ${name}\n`;
+  message += `📱 Telefone: ${phone}\n\n`;
+  message += '📋 ITENS DO PEDIDO:\n';
+  message += '━━━━━━━━━━━━━━━━━━━━\n\n';
+
+  cart.forEach((item) => {
+    message += `▪ ${item.quantity}x ${item.product.name}\n`;
+    message += `   R$ ${item.product.price.toFixed(2)} cada\n`;
+    message += `   Subtotal: R$ ${item.totalPrice.toFixed(2)}\n\n`;
+  });
+
+  message += '━━━━━━━━━━━━━━━━━━━━\n';
+  message += `💰 TOTAL: R$ ${total.toFixed(2)}\n\n`;
+  message += '🏪 RETIRADA NO LOCAL';
+
+  return message;
+};
 
 const Checkout = () => {
   const { cart, totalPrice, clearCart } = useCart();
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [address, setAddress] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -33,10 +55,19 @@ const Checkout = () => {
   }, [cart, loading, navigate]);
 
   const handleSubmit = async () => {
-    if (!address.trim()) {
+    if (!customerName.trim()) {
       toast({
         title: 'Erro',
-        description: 'Por favor, informe o endereço de entrega',
+        description: 'Por favor, informe seu nome',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (!customerPhone.trim()) {
+      toast({
+        title: 'Erro',
+        description: 'Por favor, informe seu telefone',
         variant: 'destructive',
       });
       return;
@@ -50,7 +81,8 @@ const Checkout = () => {
         .insert({
           user_id: user?.id,
           total: totalPrice,
-          delivery_address: address,
+          customer_name: customerName,
+          customer_phone: customerPhone,
           status: 'pending',
         })
         .select()
@@ -69,13 +101,24 @@ const Checkout = () => {
 
       if (itemsError) throw itemsError;
 
+      // Gerar mensagem para WhatsApp
+      const whatsappMessage = generateWhatsAppMessage(customerName, customerPhone, cart, totalPrice);
+      const whatsappNumber = '5561999999999'; // SUBSTITUA pelo número do WhatsApp da loja
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
       toast({
         title: 'Pedido realizado!',
-        description: 'Seu pedido foi realizado com sucesso',
+        description: 'Redirecionando para WhatsApp...',
       });
 
       clearCart();
-      navigate('/dashboard');
+      
+      // Abrir WhatsApp
+      window.open(whatsappUrl, '_blank');
+      
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 1000);
     } catch (error) {
       toast({
         title: 'Erro',
@@ -100,16 +143,27 @@ const Checkout = () => {
         <div className="grid md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Endereço de Entrega</CardTitle>
+              <CardTitle>Suas Informações</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="address">Endereço Completo</Label>
+                <Label htmlFor="name">Nome Completo *</Label>
                 <Input
-                  id="address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Rua, número, bairro, cidade"
+                  id="name"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  placeholder="Seu nome"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="phone">Telefone/WhatsApp *</Label>
+                <Input
+                  id="phone"
+                  value={customerPhone}
+                  onChange={(e) => setCustomerPhone(e.target.value)}
+                  placeholder="(61) 91234-5678"
+                  required
                 />
               </div>
             </CardContent>
