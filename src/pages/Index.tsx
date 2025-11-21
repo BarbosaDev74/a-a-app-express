@@ -1,9 +1,10 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-acai.jpg";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star, Clock, MapPin } from "lucide-react";
 
 const Index = () => {
   return (
@@ -33,17 +34,16 @@ const Index = () => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
-          </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="py-20 gradient-subtle">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="shadow-card hover:shadow-elegant transition-smooth border-border/50">
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full gradient-primary flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
                   <Star className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Qualidade Premium</h3>
@@ -55,7 +55,7 @@ const Index = () => {
 
             <Card className="shadow-card hover:shadow-elegant transition-smooth border-border/50">
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full gradient-primary flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
                   <Clock className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Entrega Rápida</h3>
@@ -67,7 +67,7 @@ const Index = () => {
 
             <Card className="shadow-card hover:shadow-elegant transition-smooth border-border/50">
               <CardContent className="p-8 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full gradient-primary flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
                   <MapPin className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Várias Lojas</h3>
