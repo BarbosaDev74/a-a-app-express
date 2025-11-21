@@ -1,51 +1,79 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, User, Menu } from "lucide-react";
+import { ShoppingCart, User, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { CartDrawer } from "./CartDrawer";
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const { totalItems } = useCart();
+  const { user, signOut } = useAuth();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center">
-              <span className="text-white font-bold text-xl">A</span>
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground shadow-elegant">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            <Link to="/" className="flex items-center gap-2">
+              <div className="text-2xl font-bold">Açaí Artesanal</div>
+            </Link>
+
+            <div className="hidden md:flex items-center gap-8">
+              <Link to="/" className="hover:text-accent transition-smooth">
+                Início
+              </Link>
+              <Link to="/cardapio" className="hover:text-accent transition-smooth">
+                Cardápio
+              </Link>
+              <Link to="/sobre" className="hover:text-accent transition-smooth">
+                Sobre Nós
+              </Link>
             </div>
-            <span className="font-bold text-xl text-gradient">Açaí Store</span>
-          </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-6">
-            <Link to="/" className="text-foreground hover:text-primary transition-smooth">
-              Início
-            </Link>
-            <Link to="/order" className="text-foreground hover:text-primary transition-smooth">
-              Cardápio
-            </Link>
-            <Link to="/about" className="text-foreground hover:text-primary transition-smooth">
-              Sobre
-            </Link>
-          </div>
-
-          {/* Actions */}
-          <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="icon">
-              <ShoppingCart className="h-5 w-5" />
-            </Button>
-            <Link to="/auth">
-              <Button variant="outline">
-                <User className="h-4 w-4" />
-                Login
+            <div className="hidden md:flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative text-primary-foreground hover:bg-primary-foreground/10"
+                onClick={() => setCartOpen(true)}
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground w-5 h-5 rounded-full text-xs flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
               </Button>
-            </Link>
-            <Link to="/order">
-              <Button variant="hero">Pedir Agora</Button>
-            </Link>
-          </div>
+
+              {user ? (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-primary-foreground hover:bg-primary-foreground/10"
+                    onClick={() => (window.location.href = '/dashboard')}
+                  >
+                    <User className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={signOut}
+                    className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                  >
+                    Sair
+                  </Button>
+                </>
+              ) : (
+                <Link to="/auth">
+                  <Button variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                    Entrar
+                  </Button>
+                </Link>
+              )}
+            </div>
 
           {/* Mobile Menu Button */}
           <Button

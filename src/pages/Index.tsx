@@ -1,13 +1,9 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Star, Clock, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-acai.jpg";
-import acaiBowl1 from "@/assets/acai-bowl-1.jpg";
-import acaiBowl2 from "@/assets/acai-bowl-2.jpg";
-import acaiBowl3 from "@/assets/acai-bowl-3.jpg";
+import { ArrowRight } from "lucide-react";
 
 const Index = () => {
   return (
@@ -15,39 +11,28 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-16">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={heroImage} 
-            alt="Delicious açaí bowl" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-accent/80"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 z-10 text-center text-white">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            O Melhor Açaí do Brasil
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-hero opacity-95"></div>
+        <img
+          src={heroImage}
+          alt="Açaí"
+          className="absolute inset-0 w-full h-full object-cover mix-blend-multiply"
+        />
+        <div className="relative z-10 container mx-auto px-4 text-center text-white">
+          <p className="text-lg md:text-xl mb-4 font-semibold tracking-wide">99% PURO AÇAÍ ESPECIAL</p>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+            Quem prova<br />nunca esquece!
           </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto opacity-95">
-            Ingredientes frescos e naturais, preparados com carinho para você
+          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+            Sem querer influenciar, mas nosso açaí é totalmente artesanal, feito com ingredientes
+            naturais e carinho, garantindo aquela sensação de querer aproveitar a vida ao máximo.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/order">
-              <Button size="lg" className="gradient-hero text-white shadow-glow hover:shadow-elegant hover:scale-105 transition-bounce font-semibold">
-                Pedir Agora
-                <ArrowRight className="ml-2" />
-              </Button>
-            </Link>
-            <Link to="/about">
-              <Button 
-                variant="outline" 
-                size="lg"
-                className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm"
-              >
-                Saiba Mais
-              </Button>
-            </Link>
+          <Link to="/cardapio">
+            <Button variant="hero" size="xl" className="shadow-glow">
+              Ver Cardápio
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
           </div>
         </div>
       </section>
