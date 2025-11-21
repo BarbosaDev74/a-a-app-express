@@ -8,7 +8,7 @@ export const products: Product[] = [
     description: '99% puro açaí especial, cremoso e delicioso',
     price: 18.90,
     category: 'acai',
-    image: '/src/assets/acai-bowl-1.jpg',
+    image: '/src/assets/acai-tradicional.jpg',
     sizes: [
       { size: '300ml', price: 18.90 },
       { size: '500ml', price: 24.90 },
@@ -31,7 +31,7 @@ export const products: Product[] = [
     description: 'Açaí especial com frutas selecionadas e toppings nobres',
     price: 28.90,
     category: 'acai',
-    image: '/src/assets/acai-bowl-2.jpg',
+    image: '/src/assets/acai-premium.jpg',
     sizes: [
       { size: '300ml', price: 28.90 },
       { size: '500ml', price: 36.90 },
@@ -55,7 +55,7 @@ export const products: Product[] = [
     description: 'Açaí puro com toppings saudáveis, sem açúcar adicionado',
     price: 26.90,
     category: 'acai',
-    image: '/src/assets/acai-bowl-3.jpg',
+    image: '/src/assets/acai-fitness.jpg',
     sizes: [
       { size: '300ml', price: 26.90 },
       { size: '500ml', price: 34.90 },
@@ -81,7 +81,7 @@ export const products: Product[] = [
     description: 'Sorvete artesanal de morango',
     price: 15.90,
     category: 'sorvete',
-    image: '/src/assets/acai-bowl-1.jpg',
+    image: '/src/assets/sorvete-morango.jpg',
     sizes: [
       { size: '200ml', price: 15.90 },
       { size: '400ml', price: 22.90 },
@@ -94,7 +94,7 @@ export const products: Product[] = [
     description: 'Sorvete artesanal de chocolate belga',
     price: 16.90,
     category: 'sorvete',
-    image: '/src/assets/acai-bowl-2.jpg',
+    image: '/src/assets/sorvete-chocolate.jpg',
     sizes: [
       { size: '200ml', price: 16.90 },
       { size: '400ml', price: 24.90 },
@@ -109,7 +109,7 @@ export const products: Product[] = [
     description: 'Shake cremoso de morango com leite',
     price: 14.90,
     category: 'shake',
-    image: '/src/assets/acai-bowl-3.jpg',
+    image: '/src/assets/shake-morango.jpg',
     sizes: [
       { size: '400ml', price: 14.90 },
       { size: '600ml', price: 19.90 },
@@ -122,7 +122,7 @@ export const products: Product[] = [
     description: 'Shake de açaí com banana e leite',
     price: 16.90,
     category: 'shake',
-    image: '/src/assets/acai-bowl-1.jpg',
+    image: '/src/assets/shake-acai.jpg',
     sizes: [
       { size: '400ml', price: 16.90 },
       { size: '600ml', price: 21.90 },
@@ -137,7 +137,7 @@ export const products: Product[] = [
     description: 'Vitamina cremosa de abacate com leite',
     price: 12.90,
     category: 'vitamina',
-    image: '/src/assets/acai-bowl-2.jpg',
+    image: '/src/assets/vitamina-abacate.jpg',
     sizes: [
       { size: '400ml', price: 12.90 },
       { size: '600ml', price: 17.90 },
@@ -150,7 +150,7 @@ export const products: Product[] = [
     description: 'Vitamina energética de banana com aveia',
     price: 11.90,
     category: 'vitamina',
-    image: '/src/assets/acai-bowl-3.jpg',
+    image: '/src/assets/vitamina-banana.jpg',
     sizes: [
       { size: '400ml', price: 11.90 },
       { size: '600ml', price: 16.90 },
