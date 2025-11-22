@@ -1,17 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, User, Menu, X } from "lucide-react";
+import { ShoppingCart, Menu } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/contexts/CartContext";
-import { useAuth } from "@/contexts/AuthContext";
 import { CartDrawer } from "./CartDrawer";
 
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const { totalItems } = useCart();
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
 
   return (
     <>
@@ -48,32 +45,6 @@ export const Navbar = () => {
                   </span>
                 )}
               </Button>
-
-              {user ? (
-                <>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-primary-foreground hover:bg-primary-foreground/10"
-                    onClick={() => navigate('/dashboard')}
-                  >
-                    <User className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={signOut}
-                    className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-                  >
-                    Sair
-                  </Button>
-                </>
-              ) : (
-                <Link to="/auth">
-                  <Button variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                    Entrar
-                  </Button>
-                </Link>
-              )}
             </div>
 
           {/* Mobile Menu Button */}
@@ -98,27 +69,21 @@ export const Navbar = () => {
               Início
             </Link>
             <Link
-              to="/order"
+              to="/cardapio"
               className="block py-2 text-foreground hover:text-primary transition-smooth"
               onClick={() => setMobileMenuOpen(false)}
             >
               Cardápio
             </Link>
             <Link
-              to="/about"
+              to="/sobre"
               className="block py-2 text-foreground hover:text-primary transition-smooth"
               onClick={() => setMobileMenuOpen(false)}
             >
               Sobre
             </Link>
             <div className="flex flex-col gap-2 pt-2">
-              <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full">
-                  <User className="h-4 w-4" />
-                  Login
-                </Button>
-              </Link>
-              <Link to="/order" onClick={() => setMobileMenuOpen(false)}>
+              <Link to="/cardapio" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="hero" className="w-full">Pedir Agora</Button>
               </Link>
             </div>

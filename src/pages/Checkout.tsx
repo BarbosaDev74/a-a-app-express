@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { useCart } from '@/contexts/CartContext';
-import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -35,24 +34,16 @@ const generateWhatsAppMessage = (name: string, phone: string, cart: CartItem[], 
 
 const Checkout = () => {
   const { cart, totalPrice, clearCart } = useCart();
-  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate('/auth');
-    }
-  }, [user, loading, navigate]);
-
-  useEffect(() => {
-    if (cart.length === 0 && !loading) {
-      navigate('/cardapio');
-    }
-  }, [cart, loading, navigate]);
+  if (cart.length === 0) {
+    navigate('/cardapio');
+    return null;
+  }
 
   const handleSubmit = async () => {
     if (!customerName.trim()) {
@@ -79,7 +70,6 @@ const Checkout = () => {
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert({
-          user_id: user?.id,
           total: totalPrice,
           customer_name: customerName,
           customer_phone: customerPhone,
@@ -104,7 +94,8 @@ const Checkout = () => {
       // Gerar mensagem para WhatsApp
       const whatsappMessage = generateWhatsAppMessage(customerName, customerPhone, cart, totalPrice);
       const whatsappNumber = '5561999999999'; // SUBSTITUA pelo número do WhatsApp da loja
-      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
 
       toast({
         title: 'Pedido realizado!',
@@ -129,10 +120,6 @@ const Checkout = () => {
       setSubmitting(false);
     }
   };
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Carregando...</div>;
-  }
 
   return (
     <div className="min-h-screen">
